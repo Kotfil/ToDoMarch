@@ -1,3 +1,10 @@
+* {
+  color: white;
+  background-color: black;
+}
+
+
+
 .App {
 
 }
@@ -9,10 +16,14 @@
 
 .todoList > div {
   padding: 10px;
-} 
+}
 
 .todoList-task {
 
+}
+
+.todoList-task.done {
+  opacity: 0.5;
 }
 
 .filter-active {
