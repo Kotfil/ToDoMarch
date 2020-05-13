@@ -2,26 +2,26 @@ import React from 'react';
 import './App.css';
 
 class TodoListTask extends React.Component {
+
+    onIsDoneChanged = (e) => {
+        this.props.changeStatus(this.props.task.id, e.currentTarget.checked);
+    }
+
+    onTitleChanged = (e) => {
+        this.props.changeTitle(this.props.task.id, e.currentTarget.value);
+    }
+
     state = {
-        isEditMode: false
-    };
+        editMode: false
+    }
 
-    activatedEditMode = () => {
-        this.setState({isEditMode:true})
-    };
+    activateEditMode = () => {
+        this.setState({editMode: true});
+    }
 
-    deActivatedEditMode = () => {
-        this.setState({isEditMode:false})
-    };
-
-    onIsDoneChanged = (event) => {
-        this.props.changeStatus(this.props.task.id, event.currentTarget.checked)
-    };
-
-    onTitleChanged = (event) => {
-                this.props.changeTitle(this.props.task.id, event.currentTarget.value)
-    };
-
+    deactivateEditMode= () => {
+        this.setState({editMode: false});
+    }
 
 
     render = () => {
@@ -30,21 +30,12 @@ class TodoListTask extends React.Component {
 
         return (
                 <div className={containerCssClass}>
-                    <input type="checkbox"
-                           checked={this.props.task.isDone}
-                           onChange={this.onIsDoneChanged}
-                    />
-                    <span>{this.props.task.id}--</span>
-                    {this.state.isEditMode
-                        ? <input
-                            value={this.props.task.title}
-                            autoFocus={true}
-                            onBlur={this.deActivatedEditMode}
-                            onChange={this.onTitleChanged}
-                        />
-                        : <span onClick={this.activatedEditMode}>{this.props.task.title},</span>
-                    }
-                    <span> priority: {this.props.task.priority}</span>
+                    <input type="checkbox" checked={this.props.task.isDone}
+                           onChange={this.onIsDoneChanged}/>
+                    { this.state.editMode
+                        ? <input onBlur={this.deactivateEditMode} onChange={this.onTitleChanged} autoFocus={true} value={this.props.task.title} />
+                        : <span onClick={this.activateEditMode}>{this.props.task.id} - {this.props.task.title}</span>
+                    }, priority: {this.props.task.priority}
                 </div>
         );
     }
